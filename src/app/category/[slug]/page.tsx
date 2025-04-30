@@ -7,13 +7,14 @@ import ClientSlider from "@/components/ClientSlider";
 
 const DEFAULT_IMAGE = "/default.jpg"; // Public folder fallback image
 
-interface Params {
-	slug: string;
-}
-
-export default async function CategoryPage({ params }: { params: Params }) {
+export default async function CategoryPage({
+	params,
+}: {
+	params: Promise<{ slug: string }>;
+}) {
 	// Fetch category data by slug using the GROQ query
-	const data = await client.fetch(getCategoryPageData(params.slug));
+	const slug = await params;
+	const data = await client.fetch(getCategoryPageData(slug.slug));
 	const { category, featuredGalleries, galleries } = data;
 
 	// Handle the case where category data is not found
@@ -49,7 +50,7 @@ export default async function CategoryPage({ params }: { params: Params }) {
 					<ClientSlider
 						images={
 							featuredGalleries[0]?.images?.map(
-								(img: any) => img?.asset?.url
+								(img: { asset: { url: string } }) => img?.asset?.url
 							) || []
 						}
 					/>
@@ -58,22 +59,29 @@ export default async function CategoryPage({ params }: { params: Params }) {
 
 			{/* All Galleries */}
 			<div className="mt-10 space-y-10">
-				{galleries.map((gallery: any, index: number) => (
-					<div key={index}>
-						<div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-							{gallery.images?.map((img: any, idx: number) => (
-								<Image
-									key={idx}
-									src={img?.asset?.url || DEFAULT_IMAGE}
-									alt={`Gallery Image ${idx}`}
-									width={300}
-									height={200}
-									className="rounded-md object-cover"
-								/>
-							))}
+				{galleries.map(
+					(
+						gallery: { images: { asset: { url: string } }[] },
+						index: number
+					) => (
+						<div key={index}>
+							<div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+								{gallery.images?.map(
+									(img: { asset: { url: string } }, idx: number) => (
+										<Image
+											key={idx}
+											src={img?.asset?.url || DEFAULT_IMAGE}
+											alt={`Gallery Image ${idx}`}
+											width={300}
+											height={200}
+											className="rounded-md object-cover"
+										/>
+									)
+								)}
+							</div>
 						</div>
-					</div>
-				))}
+					)
+				)}
 			</div>
 		</div>
 	);
