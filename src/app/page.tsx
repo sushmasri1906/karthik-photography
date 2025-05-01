@@ -1,28 +1,16 @@
-import Link from "next/link";
-import React from "react";
-
-function page() {
+export default function Home() {
 	return (
-		<div className="px-4 md:px-12 py-16 max-w-3xl mx-auto text-center">
-			<h1 className="text-5xl font-bold mb-4">
-				Welcome to Our Photography Studio
-			</h1>
-			<p className="text-lg text-gray-600">
-				Discover timeless moments captured through our lens. Explore our
-				categories and galleries to find stunning visual stories.
-			</p>
-			<div>
-				<h2>
-					<Link href="/category">Categroies</Link>
-				</h2>
-				<div>
-					<Link href="/category/babybump">Baby Bump</Link>
-					<Link href="/category/wedding">Wedding</Link>
-					<Link href="/category/academy">Academy</Link>
-				</div>
+		<div
+			className="h-screen w-full bg-cover bg-center"
+			style={{
+				backgroundImage:
+					"url('https://res.cloudinary.com/dgulr1hgd/image/upload/v1746026866/img1_jbrgfh.avif')",
+			}}>
+			<div className="fixed bottom-10 md:bottom-20 left-6 md:left-20 text-white z-50">
+				<h3 className="text-xs sm:text-sm md:text-base lg:text-lg italic">
+					Capturing moments, telling stories. – Karthik Nani
+				</h3>
 			</div>
 		</div>
 	);
 }
-
-export default page;
