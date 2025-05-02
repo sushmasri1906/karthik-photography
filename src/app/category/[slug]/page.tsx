@@ -13,7 +13,8 @@ export default async function CategoryPage({
 }) {
 	const slug = await params;
 	const data = await client.fetch(getCategoryPageData(slug.slug));
-	const { category, featuredGalleries, galleries } = data;
+	console.log(data);
+	const { category, featuredPhotos, galleries } = data;
 
 	if (!category) {
 		notFound();
@@ -21,9 +22,9 @@ export default async function CategoryPage({
 
 	return (
 		<div className="">
-			{featuredGalleries?.length > 0 && (
+			{featuredPhotos?.length > 0 && (
 				<div className="relative">
-					<ClientSlider images={featuredGalleries[0]?.images || []} />
+					<ClientSlider images={featuredPhotos || []} />
 				</div>
 			)}
 

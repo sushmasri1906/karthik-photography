@@ -5,7 +5,7 @@ export const getCategoryPageData = (slug: string) => `
     description,
     "heroImage": photoCategoryImage.asset->url // Assuming the category has a hero image
   },
-  "featuredCarouselPhotos": *[_type == "carouselPhoto" && category->slug.current == "${slug}" && isFeatured == true && publishedAt <= now()]{
+  "featuredPhotos": *[_type == "featuredPhotos" && category->slug.current =="${slug}"]{
     title,
     image{
       asset->{
@@ -53,16 +53,14 @@ export const getHomePageData = () => `
 }
 `;
 export interface CarouselPhoto {
-  _id: string;
-  title: string;
-  image: {
-    asset: {
-      _id: string;
-      url: string;
-    };
-  };
-  categoryName: string;
-  publishedAt: string; // This could be a Date object in JavaScript, but you may want to handle it as a string from the query
+	_id: string;
+	title: string;
+	image: {
+		asset: {
+			_id: string;
+			url: string;
+		};
+	};
+	categoryName: string;
+	publishedAt: string; // This could be a Date object in JavaScript, but you may want to handle it as a string from the query
 }
-
-
