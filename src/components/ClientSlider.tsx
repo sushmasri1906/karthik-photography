@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import "slick-carousel/slick/slick.css";
@@ -11,9 +10,12 @@ import { MouseEventHandler } from "react";
 const Slider = dynamic(() => import("react-slick"), { ssr: false });
 
 interface ImageData {
-	asset: {
-		_id?: string;
-		url: string;
+	title: string;
+	image: {
+		asset: {
+			_id?: string;
+			url: string;
+		};
 	};
 }
 
@@ -76,7 +78,7 @@ const ClientSlider = ({ images }: ClientSliderProps) => {
 						key={i}
 						className="relative w-full h-screen flex justify-center items-center">
 						<Image
-							src={img?.asset?.url || "/default.jpg"}
+							src={img?.image.asset?.url || "/default.jpg"}
 							alt={`Featured Image ${i + 1}`}
 							fill
 							className="object-cover transition-all duration-300 hover:scale-105"
