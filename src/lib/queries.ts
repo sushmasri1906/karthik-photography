@@ -1,24 +1,23 @@
-// Query to fetch the category page data with galleries and featured images
 export const getCategoryPageData = (slug: string) => `
 {
   "category": *[_type == "photoCategory" && slug.current == "${slug}"][0]{
     title,
     description,
-    "heroImage": photoCategoryImage.asset->url  // Make sure you're getting the correct image URL
+    "heroImage": photoCategoryImage.asset->url // Assuming the category has a hero image
   },
-  "featuredGalleries": *[_type == "gallery" && category->slug.current == "${slug}" && isFeatured == true]{
+  "featuredCarouselPhotos": *[_type == "carouselPhoto" && category->slug.current == "${slug}" && isFeatured == true && publishedAt <= now()]{
     title,
-    images[]{
+    image{
       asset->{
         _id,
         url
       }
     }
   },
-  "galleries": *[_type == "gallery" && category->slug.current == "${slug}"]{
+  "galleries": *[_type == "galleryAlbum" && category->slug.current == "${slug}"]{
     title,
     slug,
-    images[]{
+    images[] {
       asset->{
         _id,
         url
@@ -27,25 +26,23 @@ export const getCategoryPageData = (slug: string) => `
   }
 }
 `;
-// Query to fetch all categories with the hero banner images
 export const getAllCategoriesQuery = `
   *[_type == "photoCategory"]{
     title,
     slug,
     description,
-    "image": photoCategoryImage.asset->url // Ensure you're querying this image URL correctly
+    "heroImage": photoCategoryImage.asset->url
   }
 `;
-// Query to fetch home page data
 export const getHomePageData = () => `
 {
   "categories": *[_type == "photoCategory"]{
     title,
     "slug": slug.current,
-    "heroImage": photoCategoryImage.asset->url,  // Ensure this is correctly querying the image URL
-    "featuredGalleries": *[_type == "gallery" && category->slug.current == ^.slug.current && isFeatured == true]{
+    "heroImage": photoCategoryImage.asset->url, // Assuming category has a hero image
+    "featuredCarouselPhotos": *[_type == "carouselPhoto" && category->slug.current == ^.slug.current && isFeatured == true && publishedAt <= now()]{
       title,
-      images[]{
+      image{
         asset->{
           _id,
           url
@@ -55,3 +52,17 @@ export const getHomePageData = () => `
   }
 }
 `;
+export interface CarouselPhoto {
+  _id: string;
+  title: string;
+  image: {
+    asset: {
+      _id: string;
+      url: string;
+    };
+  };
+  categoryName: string;
+  publishedAt: string; // This could be a Date object in JavaScript, but you may want to handle it as a string from the query
+}
+
+

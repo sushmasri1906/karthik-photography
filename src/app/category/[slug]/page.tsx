@@ -1,11 +1,10 @@
-// src/app/category/[slug]/page.tsx
 import { client } from "@/lib/sanity";
 import { getCategoryPageData } from "@/lib/queries";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import ClientSlider from "@/components/ClientSlider";
 
-const DEFAULT_IMAGE = "/default.jpg"; 
+const DEFAULT_IMAGE = "/default.jpg";
 
 export default async function CategoryPage({
 	params,
@@ -23,42 +22,39 @@ export default async function CategoryPage({
 	return (
 		<div className="">
 			{featuredGalleries?.length > 0 && (
-				<div className="">
-					<ClientSlider
-						images={
-							featuredGalleries[0]?.images?.map(
-								(img: { asset: { url: string } }) => img?.asset?.url
-							) || []
-						}
-					/>
+				<div className="relative">
+					<ClientSlider images={featuredGalleries[0]?.images || []} />
 				</div>
 			)}
 
-			<p className="w-full px-12 md:px-32 py-12 text-center text-white bg-black text-2xl md:text-3xl font-extralight">
+			<p className="px-12 md:px-32 py-12 text-center text-white bg-black text-2xl md:text-3xl font-extralight">
 				{category.description}
 			</p>
 
-			<div className="bg-black    py-10">
+			<div className="bg-black ">
 				{galleries.map(
 					(
-						gallery: { images: { asset: { url: string } }[] },
+						gallery: { title: string; images: { asset: { url: string } }[] },
 						index: number
 					) => (
-						<div
-							key={index}
-							className="columns-2 md:columns-3 lg:columns-4 gap-[4px]">
-							{gallery.images?.map(
-								(img: { asset: { url: string } }, idx: number) => (
-									<Image
-										key={idx}
-										src={img?.asset?.url || DEFAULT_IMAGE}
-										alt={`Gallery Image ${idx}`}
-										width={500}
-										height={400}
-										className="mb-[1px] w-full h-auto object-cover break-inside-avoid"
-									/>
-								)
-							)}
+						<div key={index} className="px-0 sm:px-0 md:px-0 lg:px-0 mb-12">
+							<div className="columns-2 sm:columns-3 md:columns-4 lg:columns-5 gap-0">
+								{gallery.images?.map(
+									(img: { asset: { url: string } }, idx: number) => (
+										<div
+											key={idx}
+											className="mb-0 break-inside-avoid overflow-hidden">
+											<Image
+												src={img?.asset?.url || DEFAULT_IMAGE}
+												alt={`Gallery Image ${idx}`}
+												width={400}
+												height={300}
+												className="w-full h-auto object-cover"
+											/>
+										</div>
+									)
+								)}
+							</div>
 						</div>
 					)
 				)}

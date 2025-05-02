@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import "slick-carousel/slick/slick.css";
@@ -9,16 +10,22 @@ import { MouseEventHandler } from "react";
 
 const Slider = dynamic(() => import("react-slick"), { ssr: false });
 
+interface ImageData {
+	asset: {
+		_id?: string;
+		url: string;
+	};
+}
+
 interface ClientSliderProps {
-	images: string[];
-	className?: string;
+	images: ImageData[];
 }
 
-interface ArrowProps extends React.ComponentPropsWithoutRef<"div"> {
+const NextArrow = ({
+	onClick,
+}: {
 	onClick?: MouseEventHandler<HTMLDivElement>;
-}
-
-const NextArrow = ({ onClick }: ArrowProps) => (
+}) => (
 	<div
 		className="absolute right-4 top-1/2 z-40 transform -translate-y-1/2 text-white text-5xl cursor-pointer"
 		onClick={onClick}>
@@ -26,7 +33,11 @@ const NextArrow = ({ onClick }: ArrowProps) => (
 	</div>
 );
 
-const PrevArrow = ({ onClick }: ArrowProps) => (
+const PrevArrow = ({
+	onClick,
+}: {
+	onClick?: MouseEventHandler<HTMLDivElement>;
+}) => (
 	<div
 		className="absolute left-4 top-1/2 z-40 transform -translate-y-1/2 text-white text-5xl cursor-pointer"
 		onClick={onClick}>
@@ -65,7 +76,7 @@ const ClientSlider = ({ images }: ClientSliderProps) => {
 						key={i}
 						className="relative w-full h-screen flex justify-center items-center">
 						<Image
-							src={img}
+							src={img?.asset?.url || "/default.jpg"}
 							alt={`Featured Image ${i + 1}`}
 							fill
 							className="object-cover transition-all duration-300 hover:scale-105"
@@ -74,7 +85,7 @@ const ClientSlider = ({ images }: ClientSliderProps) => {
 				))}
 			</Slider>
 
-			<div className="absolute bottom-30 left-1/2 transform -translate-x-1/2 z-50">
+			<div className="absolute bottom-20 left-1/2 transform -translate-x-1/2 z-50">
 				<a
 					href="/gallery"
 					className="text-white bg-transparent border border-white px-6 py-2 font-medium shadow-md hover:bg-white hover:text-black transition-colors duration-300">
