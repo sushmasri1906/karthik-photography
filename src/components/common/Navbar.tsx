@@ -14,6 +14,8 @@ const Navbar = () => {
 		{ name: "Weddings", href: "/category/weddings" },
 		{ name: "Baby Shoot", href: "/category/babyshoot" },
 		{ name: "FNB", href: "/category/fnb" },
+		{ name: "Fashion", href: "/category/fashion" },
+
 		{ name: "About Us", href: "/about" },
 		{ name: "Contact Us", href: "/contact" },
 	];
