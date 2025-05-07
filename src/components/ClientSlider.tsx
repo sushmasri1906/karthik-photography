@@ -64,23 +64,24 @@ const ClientSlider = ({ images }: ClientSliderProps) => {
 
 	if (!images || images.length === 0) {
 		return (
-			<div className="w-full h-80 md:h-96 flex justify-center items-center bg-gray-200 rounded-lg">
+			<div className="w-full h-[400px] flex justify-center items-center bg-gray-200 rounded-lg">
 				<span className="text-xl text-gray-500">No images available</span>
 			</div>
 		);
 	}
 
 	return (
-		<div className="relative w-full h-[70vh] md:h-[80vh] lg:h-screen overflow-hidden shadow-lg">
+		<div className="relative w-full h-[670px] overflow-hidden shadow-lg">
 			<Slider {...settings}>
 				{images.map((img, i) => (
 					<div
 						key={i}
-						className="relative w-full h-[70vh] md:h-[80vh] lg:h-screen flex justify-center items-center">
+						className="relative w-full h-[670px] flex justify-center items-center">
 						<Image
 							src={img?.image.asset?.url || "/default.jpg"}
 							alt={`Featured Image ${i + 1}`}
-							fill
+							width={1600}
+							height={670} // Specific height in pixels
 							className="object-cover transition-all duration-300 hover:scale-105"
 							sizes="(max-width: 768px) 100vw, 100vw"
 							priority
@@ -89,7 +90,7 @@ const ClientSlider = ({ images }: ClientSliderProps) => {
 				))}
 			</Slider>
 
-			<div className="absolute bottom-10 md:bottom-20 left-1/2 transform -translate-x-1/2 z-50">
+			<div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-50">
 				<a
 					href="/gallery"
 					className="text-white bg-transparent border border-white px-6 py-2 font-medium shadow-md hover:bg-white hover:text-black transition-colors duration-300">
