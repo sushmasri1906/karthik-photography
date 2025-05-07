@@ -1,3 +1,4 @@
+import Footer from "@/components/common/Footer";
 import React from "react";
 
 function layout({ children }: { children: React.ReactNode }) {
@@ -5,6 +6,7 @@ function layout({ children }: { children: React.ReactNode }) {
 		<div>
 			<div className="pt-16 bg-black" />
 			{children}
+			<Footer />
 		</div>
 	);
 }
