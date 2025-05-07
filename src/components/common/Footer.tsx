@@ -75,7 +75,7 @@ const Footer = () => {
 							href="https://www.hsdev.in/"
 							target="_blank"
 							rel="noopener noreferrer"
-							className="text-pink-500 hover:underline">
+							className="text-purple-500 hover:underline">
 							hsdev.in
 						</a>
 					</p>
